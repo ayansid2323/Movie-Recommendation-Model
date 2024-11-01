@@ -41,14 +41,14 @@ Here's an example of how to use the recommendation system:
     ```
 2. Enter a movie title when prompted:
     ```
-    Enter a movie title (or 'exit' to quit): Avatar
+    Enter a movie title (or 'exit' to quit): The Dark Knight
     ```
 3. Get the top 3 movie recommendations:
     ```
-    Top 3 movies similar to 'Avatar':
-    1. Pirates of the Caribbean: At World's End
-    2. Spectre
-    3. The Dark Knight Rises
+    Top 3 movies similar to 'The Dark Knight':
+    1. The Dark Knight Rises
+    2. Batman Returns
+    3. Batman: The Dark Knight Returns, Part 2
     ```
 
 ## Data
