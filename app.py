@@ -12,7 +12,7 @@ async def read_root(request: Request):
 async def recommendMovies(request: Request):
     movies = return_data()
     sim_matrix = similarity_matrix(movies)
-    movie_title = "h912hnr2"
+    movie_title = "batman"
     recommendations = recommend_movies(movie_title, movies, sim_matrix, n=3)
     if recommendations == "Movie not found":
         return {"message": "Movie not found"}
