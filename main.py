@@ -54,7 +54,7 @@ def find_movie(data: pd.DataFrame, movie_title:str) -> int|str:
     matched_title, score = process.extractOne(movie_title, data["title"].str.lower().tolist())
     
     # If the similarity score is above a certain threshold, return the index of the movie
-    if score >= 88: # You can adjust the threshold here
+    if score >= 90: # You can adjust the threshold here
         idx = data[data["title"].str.lower() == matched_title.lower()].index[0]
         return idx
     else:
