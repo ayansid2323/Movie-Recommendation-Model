@@ -4,6 +4,7 @@ import re
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from fuzzywuzzy import process
+import ast
 
 
 # Define a custom tokenizer function
@@ -20,27 +21,40 @@ def custom_tokenizer(text):
     tokens = re.findall(r'\b\w+\b', text)
     return [token for token in tokens if not any(char.isdigit() for char in token)]
 
+def combined_text(row):
+    """
+    Combines the 'overview' and 'keywords_str' columns of a DataFrame row into a single text string.
+    """
+    return row['overview'] + ' ' + row['keywords_str']
+
 def similarity_matrix(data:pd.DataFrame) -> np.ndarray:
     """
-    Calculate the cosine similarity matrix for the movie overviews.
+    Calculate the cosine similarity matrix for the movie overviews and keywords_str.
 
     Returns:
         numpy.ndarray: A 2D numpy array representing the cosine similarity matrix.
     """
-    # Extract features from the movie overviews using the TfidfVectorizer
+    # Combine "overview" and "keywords_str" into a single text column
+    data['combined_text'] = data.apply(combined_text, axis=1)
+    
+    # Extract features from the combined text using the TfidfVectorizer
     vectorizer = TfidfVectorizer(stop_words='english', tokenizer=custom_tokenizer)
-    X_train = vectorizer.fit_transform(data["overview"])
+    X_train = vectorizer.fit_transform(data["combined_text"])
     
     # Apply a cosine similarity function to the feature matrix
     similarity_matrix0 = cosine_similarity(X_train, X_train)
     
     return similarity_matrix0
 
-def find_movie(data, movie_title):
+def find_movie(data: pd.DataFrame, movie_title:str) -> int|str:
+    """
+    Find the index of the movie in the DataFrame based on the movie title.
+    """
+    # Find the closest matching movie title
     matched_title, score = process.extractOne(movie_title, data["title"].str.lower().tolist())
-    # print(score)
     
-    if score >= 88:  # Adjust the threshold as needed
+    # If the similarity score is above a certain threshold, return the index of the movie
+    if score >= 88: # You can adjust the threshold here
         idx = data[data["title"].str.lower() == matched_title.lower()].index[0]
         return idx
     else:
@@ -81,8 +95,31 @@ def recommend_movies(movie_title:str, data:pd.DataFrame, sim_matrix:np.ndarray, 
         return "Movie not found"
 
 def return_data():
+    """
+    Reads movie data from a CSV file, processes it to extract and format keywords, and returns the processed DataFrame.
+    The function performs the following steps:
+    1. Reads the 'movies.csv' file from the './data/' directory using pandas.
+    2. Drops rows where the 'overview' column has missing values.
+    3. Parses the 'keywords' column, which contains string representations of lists of dictionaries, into actual lists of dictionaries.
+    4. Extracts the 'name' field from each dictionary in the 'keywords' lists and creates a new column 'keywords_extracted' with these names.
+    5. Joins the extracted keywords into a single string for each movie and creates a new column 'keywords_str'.
+    Returns:
+        pandas.DataFrame: A DataFrame containing the processed movie data with additional columns 'keywords_extracted' and 'keywords_str'.
+    """
     movies = pd.read_csv('./data/movies.csv', sep=',')
+    
+    # Drop rows with missing values in the 'overview' and 'keywords' columns
     movies = movies.dropna(subset=['overview'])
+    movies = movies.dropna(subset=['keywords'])
+    
+    # Convert the string representation of lists of dictionaries to actual lists of dictionaries
+    movies["keywords_extracted"] = movies["keywords"].apply(ast.literal_eval)
+    
+    # Extract the 'name' field from each dictionary in the 'keywords' lists
+    movies["keywords_extracted"] = movies["keywords_extracted"].apply(lambda x: [d['name'] for d in x])
+    
+    # Join the extracted keywords into a single string for each movie
+    movies["keywords_str"] = movies["keywords_extracted"].apply(lambda x: ', '.join(x))
     
     return movies
 
