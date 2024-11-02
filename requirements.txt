@@ -1,3 +1,4 @@
 notebook
 scikit-learn
 pandas
+fastapi[standard]
