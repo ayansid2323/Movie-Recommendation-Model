@@ -2,4 +2,5 @@ scikit-learn
 pandas
 fastapi[standard]
 numpy
+thefuzz
 fuzzywuzzy
