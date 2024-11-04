@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from utils import convert_to_list, get_keywords, join_series, find_movie
@@ -25,6 +26,21 @@ def get_similarity_matrix(movies: pd.DataFrame):
     
     return similarity_matrix
 
+def get_recommendation(movie_title: str, movies: pd.DataFrame, similarity_matrix: np.ndarray):
+    index, proper_title = find_movie(movie_title, movies)
+    if index != "Movie not found":
+        similar_movies = list(enumerate(similarity_matrix[index]))
+        similar_movies = sorted(similar_movies, key=lambda x: x[1], reverse=True)
+        recommendations: list[str] = []
+        
+        for i in range(1, 6):
+            movie_index = similar_movies[i][0]
+            recommendations.append(movies.loc[movie_index, 'title'])
+        
+        return recommendations, proper_title
+    else:
+        print("Movie not found"), None
+
 
 def main():
     movies = get_movies()
@@ -34,17 +50,14 @@ def main():
         if movie_title.lower() == 'exit':
             break
         else:
-            index, proper_title = find_movie(movie_title, movies)
-            if index != "Movie not found":
-                print(f"Similar movies to {proper_title}:")
-                similar_movies = list(enumerate(similarity_matrix[index]))
-                similar_movies = sorted(similar_movies, key=lambda x: x[1], reverse=True)
-                for i in range(1, 6):
-                    movie_index = similar_movies[i][0]
-                    print("{}. {}".format(i, movies.loc[movie_index, 'title']))
+            recommendations, proper_title = get_recommendation(movie_title, movies, similarity_matrix)
+            if proper_title:
+                print(f"Movies similar to {proper_title}:")
+                for movie in recommendations:
+                    print(movie)
             else:
                 print("Movie not found")
-                
+            
 
 if __name__ == "__main__":
     main()
