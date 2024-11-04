@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request
-from main import similarity_matrix, recommend_movies, return_data
+from new_main import get_movies, get_similarity_matrix, get_recommendation
 import uvicorn
 
 app = FastAPI()
@@ -10,14 +10,14 @@ async def read_root(request: Request):
 
 @app.get("/recommend")
 async def recommendMovies(request: Request):
-    movies = return_data()
-    sim_matrix = similarity_matrix(movies)
-    movie_title = "batman"
-    recommendations = recommend_movies(movie_title, movies, sim_matrix, n=3)
-    if recommendations == "Movie not found":
-        return {"message": "Movie not found"}
+    movies = get_movies()
+    sim_matrix = get_similarity_matrix(movies)
+    movie_title = "dark knight"
+    recommendations, proper_title = get_recommendation(movie_title, movies, sim_matrix)
+    if proper_title:
+        return {"Movie Submitted": proper_title, "Recommendations": recommendations}
     else:
-        return {"recommendations": recommendations}
+        return {"message": "Movie not found"}
 
 if __name__ == "__main__":
     uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True, log_level="info")

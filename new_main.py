@@ -26,7 +26,7 @@ def get_similarity_matrix(movies: pd.DataFrame):
     
     return similarity_matrix
 
-def get_recommendation(movie_title: str, movies: pd.DataFrame, similarity_matrix: np.ndarray):
+def get_recommendation(movie_title: str, movies: pd.DataFrame, similarity_matrix: np.ndarray) -> list[str]:
     index, proper_title = find_movie(movie_title, movies)
     if index != "Movie not found":
         similar_movies = list(enumerate(similarity_matrix[index]))
