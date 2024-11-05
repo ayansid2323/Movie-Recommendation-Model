@@ -1,4 +1,4 @@
-# Movie Recommendation System
+# Movie Recommendation System - CLI App
 
 This project is a movie recommendation system that utilizes content-based filtering. It is built using the Sci-Kit Learn framework for machine learning and Pandas for data manipulation.
 
