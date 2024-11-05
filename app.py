@@ -4,15 +4,16 @@ import uvicorn
 
 app = FastAPI()
 
-@app.get("/")
-async def read_root(request: Request):
-    return {"message": "Hello World!"}
+@app.get("/{sample_var}")
+async def read_root(sample_var, request: Request):
+    return {"message": sample_var}
 
-@app.get("/recommend")
-async def recommendMovies(request: Request):
+@app.get("/recommend/{movie_title}") # http://127.0.0.1:8000/recommend/batman+begins
+async def recommendMovies(movie_title: str, request: Request):
+    if "+" in movie_title:
+        movie_title = movie_title.replace("+", " ")
     movies = get_movies()
     sim_matrix = get_similarity_matrix(movies)
-    movie_title = "dark knight"
     recommendations, proper_title = get_recommendation(movie_title, movies, sim_matrix)
     if proper_title:
         return {"Movie Submitted": proper_title, "Recommendations": recommendations}

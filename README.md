@@ -3,7 +3,7 @@
 This project is a movie recommendation system that utilizes content-based filtering. It is built using the Sci-Kit Learn framework for machine learning and Pandas for data manipulation.
 
 ## Features
-- **Content-Based Filtering**: Recommends movies based on the similarity of their overviews.
+- **Content-Based Filtering**: Recommends movies based on the similarity of their overviews and keywords.
 - **Machine Learning**: Utilizes Sci-Kit Learn for feature extraction and similarity computation.
 - **Data Manipulation**: Efficiently handles and preprocesses data using Pandas.
 
@@ -24,11 +24,11 @@ To get started with the project, follow these steps:
     ```
 4. **Run the main script**:
     ```sh
-    python main.py
+    python new_main.py
     ```
 
 ## Usage
-- The `main.py` script contains the main logic for the movie recommendation system.
+- The `new_main.py` script contains the main logic for the movie recommendation system.
 - When prompted, enter a movie title to get recommendations for similar movies.
 - Modify the script to customize the recommendation algorithm or input data.
 
@@ -37,7 +37,7 @@ Here's an example of how to use the recommendation system:
 
 1. Run the script:
     ```sh
-    python main.py
+    python new_main.py
     ```
 2. Enter a movie title when prompted:
     ```
@@ -50,6 +50,9 @@ Here's an example of how to use the recommendation system:
     2. Batman Returns
     3. Batman: The Dark Knight Returns, Part 2
     ```
+
+## Upcoming Features
+- **FastAPI Implementation**: I am currently working on integrating FastAPI to enhance the performance and scalability of the recommendation system. Stay tuned for updates!
 
 ## Data
 The dataset used in this project is located in the `data/` directory and includes the following files:
