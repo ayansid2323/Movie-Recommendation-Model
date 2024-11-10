@@ -2,7 +2,7 @@
 
 This project is a movie recommendation system that utilizes content-based filtering. It is built using the Sci-Kit Learn framework for machine learning and Pandas for data manipulation.
 
-## Features
+## Featuress
 - **Content-Based Filtering**: Recommends movies based on the similarity of their overviews and keywords.
 - **Machine Learning**: Utilizes Sci-Kit Learn for feature extraction and similarity computation.
 - **Data Manipulation**: Efficiently handles and preprocesses data using Pandas.
