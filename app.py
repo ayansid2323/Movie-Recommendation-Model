@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request
-from new_main import get_movies, get_similarity_matrix, get_recommendation
+from main import get_movies, get_similarity_matrix, get_recommendation
 import uvicorn
 
 app = FastAPI()

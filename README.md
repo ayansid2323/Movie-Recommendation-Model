@@ -37,11 +37,11 @@ To get started with the project, follow these steps:
     ```
 6. **Run the main script**:
     ```sh
-    python new_main.py
+    python main.py
     ```
 
 ## Usage
-- The `new_main.py` script contains the main logic for the movie recommendation system.
+- The `main.py` script contains the main logic for the movie recommendation system.
 - When prompted, enter a movie title to get recommendations for similar movies.
 - Modify the script to customize the recommendation algorithm or input data.
 
@@ -50,7 +50,7 @@ Here's an example of how to use the recommendation system:
 
 1. Run the script:
     ```sh
-    python new_main.py
+    python main.py
     ```
 2. Enter a movie title when prompted:
     ```
