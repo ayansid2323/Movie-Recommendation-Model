@@ -1,15 +1,8 @@
 services:
-  web:
+  fastapi_app:
     build:
       context: .
     image: ayansid2323/movie-recommendation:latest
-    ports:
-      - "8996:8000"
+    deploy:
+      replicas: 4
     restart: unless-stopped
-    networks:
-      - my_network
-
-networks:
-  my_network:
-    name: my_network
-    driver: bridge
