@@ -3,6 +3,6 @@ services:
     build:
       context: .
     image: ayansid2323/movie-recommendation:latest
-    deploy:
-      replicas: 4
     restart: unless-stopped
+    ports:
+      - ":8000"
