@@ -4,8 +4,8 @@ services:
       context: .
     image: ayansid2323/movie-recommendation:latest
     container_name: movieapp
-    # ports:
-    #   - "8000:8000"
+    ports:
+      - "8996:8000"
     restart: unless-stopped
     networks:
       - my_network
