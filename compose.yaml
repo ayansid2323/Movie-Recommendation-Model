@@ -11,11 +11,11 @@ services:
         - action: sync
           path: .
           target: /code
-    restart: always
+    restart: unless-stopped
     networks:
       - my_network
 
 networks:
   my_network:
     name: my_network
-    external: true
+    driver: bridge
