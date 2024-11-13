@@ -5,4 +5,4 @@ services:
     image: ayansid2323/movie-recommendation:latest
     restart: unless-stopped
     ports:
-      - ":8000"
+      - "8000:8000"
